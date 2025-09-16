@@ -16,6 +16,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.tonic.Logger;
 import com.tonic.Static;
 import com.tonic.model.ui.componants.FancyButton;
@@ -28,19 +29,18 @@ import net.runelite.client.ui.PluginPanel;
 
 public class SidePanel extends PluginPanel
 {
-    private static final Color TIMER_COLOR = new Color(0, 255, 0); // Green color
-
+    private ExamplePluginConfig config;
     private final JLabel timerLabel;
     private final JButton startStopButton;
     private final FancyDropdown<DropStrategy> strategyDropdown;
     private final Timer timer;
-
     private long startTime;
     private boolean isRunning = false;
 
     @Inject
-    public SidePanel()
+    public SidePanel(ExamplePluginConfig config)
     {
+        this.config = config;
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setBackground(ColorScheme.DARK_GRAY_COLOR);
         setLayout(new GridBagLayout());
@@ -62,6 +62,7 @@ public class SidePanel extends PluginPanel
         timerPanel.setLayout(new BorderLayout());
 
         timerLabel = new JLabel("00:00:00", SwingConstants.CENTER);
+        Color TIMER_COLOR = new Color(0, 255, 0);
         timerLabel.setForeground(TIMER_COLOR);
         timerLabel.setFont(new Font(Font.MONOSPACED, Font.BOLD, 24));
         timerPanel.add(timerLabel, BorderLayout.CENTER);
@@ -70,7 +71,8 @@ public class SidePanel extends PluginPanel
         c.gridy++;
 
         strategyDropdown = new FancyDropdown<>("Dropping Strategy", DropStrategy.class);
-        strategyDropdown.setSelectedItem(DropStrategy.DROP_FULL);
+        strategyDropdown.setSelectedItem(config.getDropStrategy());
+        strategyDropdown.addSelectionListener(e -> config.setDropStrategy(strategyDropdown.getSelectedItem()));
 
         add(strategyDropdown, c);
         c.gridy++;

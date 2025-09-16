@@ -24,30 +24,27 @@ public enum DropStrategy
             case DROP_FULL:
                 if(InventoryAPI.isFull())
                 {
-                    ItemContainerEx container = new ItemContainerEx(InventoryID.INV);
-                    List<ItemEx> items = container.getAll("Logs");
-                    for(ItemEx item : items)
-                    {
-                        ClickManagerUtil.queueClickBox(item);
-                        InventoryAPI.interact(item, "Drop");
-                    }
+                    dropLogs();
                     return true;
                 }
                 break;
             case DROP_EACH:
                 if(InventoryAPI.contains("Logs"))
                 {
-                    ItemContainerEx container = new ItemContainerEx(InventoryID.INV);
-                    List<ItemEx> items = container.getAll("Logs");
-                    for(ItemEx item : items)
-                    {
-                        ClickManagerUtil.queueClickBox(item);
-                        InventoryAPI.interact(item, "Drop");
-                    }
+                    dropLogs();
                     return true;
                 }
                 break;
         }
         return false;
+    }
+
+    private void dropLogs() {
+        ItemContainerEx container = new ItemContainerEx(InventoryID.INV);
+        List<ItemEx> items = container.getAll("Logs");
+        for(ItemEx item : items) {
+            ClickManagerUtil.queueClickBox(item);
+            InventoryAPI.interact(item, "Drop");
+        }
     }
 }
