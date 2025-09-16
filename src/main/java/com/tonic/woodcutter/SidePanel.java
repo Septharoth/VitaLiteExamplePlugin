@@ -21,6 +21,7 @@ import com.tonic.Logger;
 import com.tonic.Static;
 import com.tonic.model.ui.componants.FancyButton;
 import com.tonic.model.ui.componants.FancyCard;
+import com.tonic.model.ui.componants.FancyDropdown;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.client.ui.ColorScheme;
@@ -32,6 +33,7 @@ public class SidePanel extends PluginPanel
 
     private final JLabel timerLabel;
     private final JButton startStopButton;
+    private final FancyDropdown<ChoppingStrategy> strategyDropdown;
     private final Timer timer;
 
     private long startTime;
@@ -66,6 +68,12 @@ public class SidePanel extends PluginPanel
         timerPanel.add(timerLabel, BorderLayout.CENTER);
 
         add(timerPanel, c);
+        c.gridy++;
+
+        strategyDropdown = new FancyDropdown<>("Chopping Strategy", ChoppingStrategy.class);
+        strategyDropdown.setSelectedItem(ChoppingStrategy.DROP_FULL);
+
+        add(strategyDropdown, c);
         c.gridy++;
 
         startStopButton = new FancyButton("Start");
@@ -141,6 +149,11 @@ public class SidePanel extends PluginPanel
     public boolean isRunning()
     {
         return isRunning;
+    }
+
+    public ChoppingStrategy getSelectedStrategy()
+    {
+        return strategyDropdown.getSelectedItem();
     }
 
     public void shutdown()
