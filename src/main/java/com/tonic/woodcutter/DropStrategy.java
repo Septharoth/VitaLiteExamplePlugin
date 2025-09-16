@@ -9,10 +9,12 @@ import net.runelite.api.gameval.InventoryID;
 
 import java.util.List;
 
-public enum ChoppingStrategy
+public enum DropStrategy
 {
     DROP_FULL,
     DROP_EACH
+
+    ;
 
     public boolean process()
     {

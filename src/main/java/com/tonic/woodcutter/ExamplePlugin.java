@@ -4,25 +4,19 @@ import com.tonic.Logger;
 import com.tonic.Static;
 import com.tonic.api.entities.PlayerAPI;
 import com.tonic.api.entities.TileObjectAPI;
-import com.tonic.api.widgets.InventoryAPI;
-import com.tonic.data.ItemContainerEx;
-import com.tonic.data.ItemEx;
 import com.tonic.data.TileObjectEx;
 import com.tonic.services.ClickManager;
 import com.tonic.util.VitaPlugin;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
-import net.runelite.api.gameval.InventoryID;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.util.ImageUtil;
-import org.w3c.dom.css.Rect;
 
 import javax.inject.Inject;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 @PluginDescriptor(
         name = "Vita Wood Chopper Pro",
@@ -73,7 +67,7 @@ public class ExamplePlugin extends VitaPlugin
         if(!PlayerAPI.isIdle(local))
             return;
 
-        ChoppingStrategy strategy = panel.getSelectedStrategy();
+        DropStrategy strategy = panel.getSelectedStrategy();
         if(strategy.process())
         {
             return;

@@ -2,7 +2,6 @@ package com.tonic.woodcutter;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -33,7 +32,7 @@ public class SidePanel extends PluginPanel
 
     private final JLabel timerLabel;
     private final JButton startStopButton;
-    private final FancyDropdown<ChoppingStrategy> strategyDropdown;
+    private final FancyDropdown<DropStrategy> strategyDropdown;
     private final Timer timer;
 
     private long startTime;
@@ -70,8 +69,8 @@ public class SidePanel extends PluginPanel
         add(timerPanel, c);
         c.gridy++;
 
-        strategyDropdown = new FancyDropdown<>("Chopping Strategy", ChoppingStrategy.class);
-        strategyDropdown.setSelectedItem(ChoppingStrategy.DROP_FULL);
+        strategyDropdown = new FancyDropdown<>("Dropping Strategy", DropStrategy.class);
+        strategyDropdown.setSelectedItem(DropStrategy.DROP_FULL);
 
         add(strategyDropdown, c);
         c.gridy++;
@@ -151,7 +150,7 @@ public class SidePanel extends PluginPanel
         return isRunning;
     }
 
-    public ChoppingStrategy getSelectedStrategy()
+    public DropStrategy getSelectedStrategy()
     {
         return strategyDropdown.getSelectedItem();
     }
