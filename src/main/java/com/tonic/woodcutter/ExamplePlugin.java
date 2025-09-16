@@ -1,5 +1,6 @@
 package com.tonic.woodcutter;
 
+import com.google.inject.Provides;
 import com.tonic.Logger;
 import com.tonic.Static;
 import com.tonic.api.entities.PlayerAPI;
@@ -9,6 +10,7 @@ import com.tonic.services.ClickManager;
 import com.tonic.util.VitaPlugin;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
+import net.runelite.client.config.ConfigManager;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.ClientToolbar;
 import net.runelite.client.ui.NavigationButton;
@@ -29,9 +31,15 @@ public class ExamplePlugin extends VitaPlugin
     private ClientToolbar clientToolbar;
     @Inject
     private Client client;
-
     private SidePanel panel;
     private NavigationButton navButton;
+    private ExamplePluginConfig config;
+
+    @Provides
+    ExamplePluginConfig provideConfig(ConfigManager configManager)
+    {
+        return configManager.getConfig(ExamplePluginConfig.class);
+    }
 
     @Override
     protected void startUp()
