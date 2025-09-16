@@ -74,34 +74,9 @@ public class ExamplePlugin extends VitaPlugin
             return;
 
         ChoppingStrategy strategy = panel.getSelectedStrategy();
-        switch (strategy)
+        if(strategy.process())
         {
-            case DROP_FULL:
-                if(InventoryAPI.isFull())
-                {
-                    ItemContainerEx container = new ItemContainerEx(InventoryID.INV);
-                    List<ItemEx> items = container.getAll("Logs");
-                    for(ItemEx item : items)
-                    {
-                        ClickManager.queueClickBox(Static.getRuneLite().getGameApplet().getSideMenuArea());
-                        InventoryAPI.interact(item, "Drop");
-                    }
-                    return;
-                }
-                break;
-            case DROP_EACH:
-                if(InventoryAPI.contains("Logs"))
-                {
-                    ItemContainerEx container = new ItemContainerEx(InventoryID.INV);
-                    List<ItemEx> items = container.getAll("Logs");
-                    for(ItemEx item : items)
-                    {
-                        ClickManager.queueClickBox(Static.getRuneLite().getGameApplet().getSideMenuArea());
-                        InventoryAPI.interact(item, "Drop");
-                    }
-                    return;
-                }
-                break;
+            return;
         }
 
         TileObjectEx tree = TileObjectAPI.get("Tree");
