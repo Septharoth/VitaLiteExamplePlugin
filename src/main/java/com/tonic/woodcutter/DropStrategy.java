@@ -5,6 +5,7 @@ import com.tonic.api.widgets.InventoryAPI;
 import com.tonic.data.ItemContainerEx;
 import com.tonic.data.ItemEx;
 import com.tonic.services.ClickManager;
+import com.tonic.util.ClickManagerUtil;
 import net.runelite.api.gameval.InventoryID;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public enum DropStrategy
                     List<ItemEx> items = container.getAll("Logs");
                     for(ItemEx item : items)
                     {
-                        ClickManager.queueClickBox(Static.getRuneLite().getGameApplet().getSideMenuArea());
+                        ClickManagerUtil.queueClickBox(item);
                         InventoryAPI.interact(item, "Drop");
                     }
                     return true;
@@ -40,7 +41,7 @@ public enum DropStrategy
                     List<ItemEx> items = container.getAll("Logs");
                     for(ItemEx item : items)
                     {
-                        ClickManager.queueClickBox(Static.getRuneLite().getGameApplet().getSideMenuArea());
+                        ClickManagerUtil.queueClickBox(item);
                         InventoryAPI.interact(item, "Drop");
                     }
                     return true;

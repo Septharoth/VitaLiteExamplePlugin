@@ -7,6 +7,7 @@ import com.tonic.api.entities.PlayerAPI;
 import com.tonic.api.entities.TileObjectAPI;
 import com.tonic.data.TileObjectEx;
 import com.tonic.services.ClickManager;
+import com.tonic.util.ClickManagerUtil;
 import com.tonic.util.VitaPlugin;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
@@ -88,17 +89,7 @@ public class ExamplePlugin extends VitaPlugin
             return;
         }
 
-        ClickManager.queueClickBox(getClickBox(tree));
+        ClickManagerUtil.queueClickBox(tree);
         TileObjectAPI.interact(tree, "Chop down");
-    }
-
-    private Rectangle getClickBox(TileObjectEx object)
-    {
-        Shape shape = object.getTileObject().getClickbox();
-        if(shape != null)
-        {
-            return shape.getBounds();
-        }
-        return Static.getRuneLite().getGameApplet().getWorldViewportArea();
     }
 }
