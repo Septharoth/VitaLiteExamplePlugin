@@ -1,40 +1,33 @@
 package com.tonic.woodcutter;
 
-import com.tonic.Static;
 import com.tonic.api.widgets.InventoryAPI;
 import com.tonic.data.ItemContainerEx;
 import com.tonic.data.ItemEx;
-import com.tonic.services.ClickManager;
 import com.tonic.util.ClickManagerUtil;
 import net.runelite.api.gameval.InventoryID;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public enum DropStrategy
 {
-    DROP_FULL,
-    DROP_EACH
-
+    DROP_FULL(v -> InventoryAPI.isFull()),
+    DROP_EACH(v -> InventoryAPI.contains("Logs"))
     ;
+
+    private final Predicate<Void> condition;
+
+    DropStrategy(Predicate<Void> condition)
+    {
+        this.condition = condition;
+    }
 
     public boolean process()
     {
-        switch (this)
+        if(condition.test(null))
         {
-            case DROP_FULL:
-                if(InventoryAPI.isFull())
-                {
-                    dropLogs();
-                    return true;
-                }
-                break;
-            case DROP_EACH:
-                if(InventoryAPI.contains("Logs"))
-                {
-                    dropLogs();
-                    return true;
-                }
-                break;
+            dropLogs();
+            return true;
         }
         return false;
     }
