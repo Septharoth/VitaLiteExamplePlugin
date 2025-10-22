@@ -19,7 +19,9 @@ repositories {
 val apiVersion = "latest.release"
 
 dependencies {
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
     compileOnly("net.runelite:client:$apiVersion")
     compileOnly("com.tonic:base-api:$apiVersion")
     compileOnly("com.tonic:api:$apiVersion")
+    compileOnly("com.tonic.plugins:plugins:$apiVersion")
 }
