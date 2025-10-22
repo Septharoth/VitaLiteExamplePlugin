@@ -6,6 +6,7 @@ import com.tonic.Static;
 import com.tonic.api.entities.PlayerAPI;
 import com.tonic.api.entities.TileObjectAPI;
 import com.tonic.data.TileObjectEx;
+import com.tonic.plugins.breakhandler.BreakHandler;
 import com.tonic.services.ClickManager;
 import com.tonic.util.ClickManagerUtil;
 import com.tonic.util.VitaPlugin;
@@ -30,6 +31,8 @@ public class ExamplePlugin extends VitaPlugin
     private ClientToolbar clientToolbar;
     @Inject
     private Client client;
+
+    private final BreakHandler breakHandler = BreakHandler.getInstance();
     private SidePanel panel;
     private NavigationButton navButton;
     private ExamplePluginConfig config;
@@ -55,6 +58,8 @@ public class ExamplePlugin extends VitaPlugin
                 .build();
 
         clientToolbar.addNavigation(navButton);
+
+        breakHandler.register(this);
     }
 
     @Override
@@ -62,12 +67,17 @@ public class ExamplePlugin extends VitaPlugin
     {
         clientToolbar.removeNavigation(navButton);
         panel.shutdown();
+
+        breakHandler.unregister(this);
     }
 
     @Override
     public void loop()
     {
         if(panel == null || !panel.isRunning())
+            return;
+
+        if(breakHandler.isBreaking(this))
             return;
 
         Player local = client.getLocalPlayer();

@@ -14,6 +14,7 @@ import com.tonic.Static;
 import com.tonic.model.ui.components.FancyButton;
 import com.tonic.model.ui.components.FancyCard;
 import com.tonic.model.ui.components.FancyDropdown;
+import com.tonic.plugins.breakhandler.BreakHandler;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.client.ui.ColorScheme;
@@ -30,7 +31,7 @@ public class SidePanel extends PluginPanel
     private boolean isRunning = false;
 
     @Inject
-    public SidePanel(ExamplePluginConfig config)
+    public SidePanel(ExamplePlugin plugin, ExamplePluginConfig config)
     {
         this.config = config;
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -71,7 +72,9 @@ public class SidePanel extends PluginPanel
 
         startStopButton = new FancyButton("Start");
         startStopButton.setFocusable(false);
-        startStopButton.addActionListener(e -> toggleTimer());
+        startStopButton.addActionListener(e -> {
+            toggle(plugin);
+        });
 
         add(startStopButton, c);
         c.gridy++;
@@ -82,7 +85,7 @@ public class SidePanel extends PluginPanel
         add(new JPanel(), c);
     }
 
-    private void toggleTimer()
+    private void toggle(ExamplePlugin plugin)
     {
         Client client = Static.getClient();
         if(client.getGameState() != GameState.LOGGED_IN && client.getGameState() != GameState.LOADING)
@@ -95,6 +98,7 @@ public class SidePanel extends PluginPanel
             isRunning = false;
             timer.stop();
             startStopButton.setText("Start");
+            BreakHandler.getInstance().stop(plugin);
         }
         else
         {
@@ -102,6 +106,7 @@ public class SidePanel extends PluginPanel
             startTime = System.currentTimeMillis();
             timer.start();
             startStopButton.setText("Stop");
+            BreakHandler.getInstance().start(plugin);
         }
     }
 
