@@ -23,5 +23,4 @@ dependencies {
     compileOnly("net.runelite:client:$apiVersion")
     compileOnly("com.tonic:base-api:$apiVersion")
     compileOnly("com.tonic:api:$apiVersion")
-    compileOnly("com.tonic.plugins:plugins:$apiVersion")
 }
