@@ -14,7 +14,7 @@ import com.tonic.Static;
 import com.tonic.model.ui.components.FancyButton;
 import com.tonic.model.ui.components.FancyCard;
 import com.tonic.model.ui.components.FancyDropdown;
-import com.tonic.plugins.breakhandler.BreakHandler;
+import com.tonic.services.breakhandler.BreakHandler;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.client.ui.ColorScheme;
@@ -22,11 +22,14 @@ import net.runelite.client.ui.PluginPanel;
 
 public class SidePanel extends PluginPanel
 {
-    private ExamplePluginConfig config;
+    private final ExamplePluginConfig config;
     private final JLabel timerLabel;
     private final JButton startStopButton;
     private final FancyDropdown<DropStrategy> strategyDropdown;
     private final Timer timer;
+    @Inject
+    private BreakHandler breakHandler;
+
     private long startTime;
     private boolean isRunning = false;
 
@@ -98,7 +101,7 @@ public class SidePanel extends PluginPanel
             isRunning = false;
             timer.stop();
             startStopButton.setText("Start");
-            BreakHandler.getInstance().stop(plugin);
+            breakHandler.stop(plugin);
         }
         else
         {
@@ -106,7 +109,7 @@ public class SidePanel extends PluginPanel
             startTime = System.currentTimeMillis();
             timer.start();
             startStopButton.setText("Stop");
-            BreakHandler.getInstance().start(plugin);
+            breakHandler.start(plugin);
         }
     }
 

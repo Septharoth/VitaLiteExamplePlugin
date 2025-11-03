@@ -2,12 +2,10 @@ package com.tonic.woodcutter;
 
 import com.google.inject.Provides;
 import com.tonic.Logger;
-import com.tonic.Static;
 import com.tonic.api.entities.PlayerAPI;
 import com.tonic.api.entities.TileObjectAPI;
 import com.tonic.data.TileObjectEx;
-import com.tonic.plugins.breakhandler.BreakHandler;
-import com.tonic.services.ClickManager;
+import com.tonic.services.breakhandler.BreakHandler;
 import com.tonic.util.ClickManagerUtil;
 import com.tonic.util.VitaPlugin;
 import net.runelite.api.Client;
@@ -32,7 +30,8 @@ public class ExamplePlugin extends VitaPlugin
     @Inject
     private Client client;
 
-    private final BreakHandler breakHandler = BreakHandler.getInstance();
+    @Inject
+    private BreakHandler breakHandler;
     private SidePanel panel;
     private NavigationButton navButton;
     private ExamplePluginConfig config;
@@ -99,5 +98,15 @@ public class ExamplePlugin extends VitaPlugin
 
         ClickManagerUtil.queueClickBox(tree);
         TileObjectAPI.interact(tree, "Chop down");
+    }
+
+    public void startBreaks()
+    {
+        breakHandler.start(this);
+    }
+
+    public void stopBreaks()
+    {
+        breakHandler.stop(this);
     }
 }
