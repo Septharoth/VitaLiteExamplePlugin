@@ -34,7 +34,7 @@ tasks.register<Jar>("buildPlugin") {
     dependsOn(tasks.named("classes"))
 
     from(sourceSets.main.get().output)
-    include("com/tonic/plugins/**")
+
     archiveBaseName.set(project.name)
 
     destinationDirectory.set(file(sideloadedPluginsDir))
